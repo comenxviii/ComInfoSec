@@ -1,0 +1,87 @@
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Crypto {
+    public static void main(String args[]) {
+        //encrypt("I am a student, i study in Naresuan University",5);
+        decrypt("N%fr%f%xyzijsy1%n%xyzi~%ns%Sfwjxzfs%Zsn{jwxny~");
+    }
+
+    public static void encrypt(String plainText,int key) {
+        StringBuffer e = new StringBuffer();
+        char[] cs = plainText.toCharArray();
+        for(int i = 0; i < cs.length; i++) {
+            e.append((char)((cs[i] + key)%256));
+        }
+        System.out.println(e.toString());
+
+    }
+
+    public static void decrypt(String cipherText) {
+        String str = readFile("D://Programing/JAVA/Crypto/words.txt");
+        StringBuffer e = new StringBuffer();
+        StringBuffer s = new StringBuffer();
+        char[] cs = cipherText.toCharArray();
+        for(int j = 0; j <= 9; j++) {
+
+            for (int i = 0; i < cs.length; i++) {
+                e.append((char)((cs[i] - j) % 256));
+                s.append((char)((cs[i] + j) % 256));
+            }
+
+            if (e.indexOf(" ") > 0) { //if has whitespaces the give spite to array
+                String[] item1 = e.toString().split("\\s");
+                int count1 = 0;
+                for (int k = 0; k < item1.length; k++) {
+                    if(str.toLowerCase().indexOf(item1[k].toLowerCase()) >= 0) {
+                        count1++;
+                    }
+                }
+                if(count1 > 0) { System.out.println("plaintext is " + e.toString() + " and key is " + "-" + j); }
+            }
+            else if (s.indexOf(" ") > 0) {
+                String[] item2 = s.toString().split("\\s");
+                int count2 = 0;
+                for (int k = 0; k < item2.length; k++) {
+                    if(str.toLowerCase().indexOf(item2[k].toLowerCase()) >= 0) {
+                        count2++;
+                    }
+                }
+                if(count2 > 0) { System.out.println("plaintext is " + s.toString() + " and key is " + j); }
+            }
+            else {
+                if(str.toLowerCase().indexOf(e.toString().toLowerCase()) > 0) {
+                    System.out.println(e.toString());
+                    System.out.println("plaintext is " + e.toString() + " and key is " + "-" + j);
+                }
+                else if(str.toLowerCase().indexOf(e.toString().toLowerCase()) > 0) {
+                    System.out.println(s.toString());
+                    System.out.println("plaintext is " + s.toString() + " and key is " + j);
+                }
+            }
+            e.delete(0,e.length());
+            s.delete(0,s.length());
+        }
+    }
+
+    public static String readFile(String filename) {
+        String content = null;
+        File file = new File(filename); //for ex foo.txt
+        FileReader reader = null;
+        try {
+            reader = new FileReader(file);
+            char[] chars = new char[(int) file.length()];
+            reader.read(chars);
+            content = new String(chars);
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(reader !=null) {
+
+            }
+        }
+        return content;
+    }
+}

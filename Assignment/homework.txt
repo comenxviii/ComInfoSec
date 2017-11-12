@@ -1,0 +1,7 @@
+C:\Users\DEVMan\AppData\Local\Android\sdk Add SDK
+
+1.1 One number as a key
+1.2 One word as a key
+1.3 One word as a key + (cumulating key)
+1.4 One word as a key + (previous cipher text)
+
